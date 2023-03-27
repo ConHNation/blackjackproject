@@ -1,3 +1,4 @@
+#Connor Hayden, Dylan Lovell, and Mateus Rudzki are the other peple im collaborating with.
 # Module to manage balances.
 
 user_balances = {}
@@ -21,3 +22,11 @@ def create_balance(username, difficulty):
 def get_balance(username):
 	global user_balances
 	return user_balances[username]
+
+def remove_balance(username):
+  username - create_balance
+
+def add_balance(username):
+  username + create_balance
+  
+  

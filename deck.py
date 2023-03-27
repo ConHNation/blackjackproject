@@ -5,15 +5,28 @@ from random import shuffle
 import logging
 import threading
 # all possible cards
-allcardnums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King", "Ace"]
-allcardtypes = ["♠", "♣", "♦", "♥"]
+all_card_nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "Jack", "Queen", "King", "Ace"]
+all_card_types = ["♠", "♣", "♦", "♥"]
 
 # logger
 log = logging.getLogger("Deck Manager")
 
 # card class - this allows me to make the cards python objects, which makes them easier to compare and reduces errors
 class card:
+	'''
+  This is a Python class I made
+	to simply the evaluation, printing and 
+ 	calculation of cards during games.
 
+ 	The __str__ function returns what should
+	be printed when a deck.card object is printed.
+
+ 	The __init__ function defines the different parameters
+	of a card class.
+
+ 	The __eq__ function allows multiple card objects to be 
+	evaluated against each other or added up. 
+ 	'''
 	def __init__(self, card_type, card_num):
 		self.type = card_type
 		self.number = card_num
@@ -43,11 +56,11 @@ def newdeck(num: int):
 		return TooManyDecksError
 	else:
 		num = int(num)
-		global allcardtypes, allcardnums
+		global all_card_types, all_card_nums
 		deck = []
 		for _ in range(num):
-			for x in allcardtypes:
-				for y in allcardnums:
+			for x in all_card_types:
+				for y in all_card_nums:
 					deck.append(card(x, y))
 		shuffle(deck)
 		return deck

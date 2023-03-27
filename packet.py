@@ -8,7 +8,7 @@ import tkinter as tk
 
 # config
 server = None
-HOST_ADDR = "panel.simp4.me"
+HOST_ADDR = "127.0.0.1"
 HOST_PORT = 1250
 
 # initialize logger
@@ -33,8 +33,8 @@ stopButton.pack(side=tk.LEFT)
 header.pack(side=tk.TOP, pady=(5, 0))
 
 # function to start server
-def start_server(name):
-	global HOST_PORT, HOST_ADDR, log, server
+def start_server():
+	global HOST_PORT, HOST_ADDR, log, server, startButton, stopButton
 
 	# sets server object
 	log.debug("Creating server socket object.")
@@ -49,12 +49,13 @@ def start_server(name):
 	log.info("Listener online.")
 
   # starts a thread that listens for new players
+def accept_clients():
 	log.info("Moving listener to seperate thread.")
-	threading._start_new_thread(accept_clients, (server, " "))
+	threading._start_new_thread(accept_clients, (server, ""))
+
+	# flips the start and stop buttons
+	startButton.state = tk.DISABLED
+	stopButton.state = tk.ENABLED
 
 def stop_server():
 	pass
-
-# keeps window open
-paneldisplaythread = threading.Thread(target=panel.mainloop)
-paneldisplaythread.start()
