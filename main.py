@@ -19,8 +19,7 @@ log.info("Starting game...")
 log.info("Launching Tkinter multithreading manager.")
 try:
 	tkthread.patch()
-except Exception as e
-:
+except Exception as e:
 	log.error(f"Error while starting Tkinter multithreading manager: {e}")
 log.info("Started.")
 
