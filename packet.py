@@ -3,6 +3,7 @@
 # dependencies
 import logging
 import socket
+import datetime
 import threading
 import tkinter as tk
 
@@ -10,12 +11,13 @@ import tkinter as tk
 server = None
 HOST_ADDR = "127.0.0.1"
 HOST_PORT = 1250
-
-# initialize logger
-log = logging.getLogger("Packet Manager")
+client_name = " "
+clients = []
+clients_names = []
+player_data = []
 
 # packet reciever
-log.info("Initializing packet reciever.")
+logging.info("Initializing packet reciever.")
 
 # gui panel to control server
 panel = tk.Tk()
@@ -34,28 +36,38 @@ header.pack(side=tk.TOP, pady=(5, 0))
 
 # function to start server
 def start_server():
-	global HOST_PORT, HOST_ADDR, log, server, startButton, stopButton
+	global HOST_PORT, HOST_ADDR, server, startButton, stopButton
 
 	# sets server object
-	log.debug("Creating server socket object.")
+	logging.debug("Creating server socket object.")
 	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	print(socket.AF_INET)
-	print(socket.SOCK_STREAM)
 
 	# starts listening for new players
-	log.info("Initializing listener for new players.")
+	logging.info("Initializing listener for new players.")
 	server.bind((HOST_ADDR, HOST_PORT))
 	server.listen(5)
-	log.info("Listener online.")
 
-  # starts a thread that listens for new players
-def accept_clients():
-	log.info("Moving listener to seperate thread.")
-	threading._start_new_thread(accept_clients, (server, ""))
+	# starts a thread that listens for new players
+	logging.info("Moving listener to seperate thread.")
+	threading._start_new_thread(accept_clients, (server, " "))
+	logging.info("Listener online.")
+	
+
+def accept_clients(server, yeah):
+	pass
 
 	# flips the start and stop buttons
-	startButton.state = tk.DISABLED
-	stopButton.state = tk.ENABLED
+	startButton.config(state=tk.DISABLED)
+	stopButton.config(state=tk.NORMAL)
+
 
 def stop_server():
-	pass
+	global server
+	startButton.config(state=tk.NORMAL)
+	stopButton.config(state=tk.DISABLED)
+
+	
+# runs the panel
+logging.info("Loading admin panel...")
+panel.mainloop()
+logging.info("Admin panel loaded.")

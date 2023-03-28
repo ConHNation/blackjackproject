@@ -2,32 +2,26 @@
 # CSP Final Project
 # Made by Connor Hayden, Dylan Lovell (I'm working on this module), Mateus Rudzki and Lance Hinojosa
 
-# dependencies
+# start logger
+import logging
+from datetime import datetime
+
+today = datetime.today()
+logging.basicConfig(level=logging.DEBUG, filename=f'\logs\serverlog-{str(today.month)}-{str(today.date)}-{str(today.hour)}-{str(today.minute)}-{str(today.second)}.txt', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+
+# dependencies (not at start b/c i need 
+# logging to start before files are loaded)
 from deck import card
 import deck
 import balance
 import packet
 import threading
-import tkthread
-import logging
 
-# initialize logging
-log = logging.getLogger("main")
-log.info("Starting game...")
+# logger settings
+today = today()
+print(f"{today.month}-{today.date}-{today.hour}-{today.minute}-{today.second}")
+logging.basicConfig(level=logging.DEBUG, filename=f'{today.month}-{today.date}-{today.hour}-{today.minute}-{today.second}', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
 
-# launch threading manager for tkinter
-log.info("Launching Tkinter multithreading manager.")
-try:
-	tkthread.patch()
-except Exception as e:
-	log.error(f"Error while starting Tkinter multithreading manager: {e}")
-log.info("Started.")
+# start login screen
 
-# start panel thread
-log.info("\nInitializing control panel...")
-try:
-	paneldisplaythread = threading.Thread(target=packet.panel.mainloop)
-	paneldisplaythread.start()
-except Exception as e:
-	log.error(f"Error occured when starting panel file: {e}")
-log.info("Panel started.")
+
