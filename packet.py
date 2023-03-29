@@ -21,7 +21,7 @@ logging.info("Initializing packet reciever.")
 
 # gui panel to control server
 panel = tk.Tk()
-panel.title = "Blackjack - Administrator Panel"
+panel.title("Blackjack - Server Panel")
 
 header = tk.Frame(panel)
 

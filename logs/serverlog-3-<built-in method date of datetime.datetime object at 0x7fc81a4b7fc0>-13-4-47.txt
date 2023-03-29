@@ -1,0 +1,14 @@
+root - INFO - Initializing packet reciever.
+root - INFO - Loading admin panel...
+root - DEBUG - Creating server socket object.
+root - INFO - Initializing listener for new players.
+root - INFO - Moving listener to seperate thread.
+root - INFO - Listener online.
+root - DEBUG - Creating server socket object.
+root - INFO - Initializing listener for new players.
+root - INFO - Moving listener to seperate thread.
+root - INFO - Listener online.
+root - DEBUG - Creating server socket object.
+root - INFO - Initializing listener for new players.
+root - INFO - Moving listener to seperate thread.
+root - INFO - Listener online.

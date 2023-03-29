@@ -12,7 +12,7 @@ all_card_types = ["♠", "♣", "♦", "♥"]
 class card:
 	'''
   This is a Python class I made
-	to simply the evaluation, printing and 
+	to simplify the evaluation, printing, and 
  	calculation of cards during games.
 
  	The __str__ function returns what should
@@ -42,11 +42,11 @@ class TooManyDecksError(Exception):
     pass
 
 # generates the deck
-def newdeck(num: int):
+def new_deck(num: int):
 	logging.info("Generating new deck...")
 	if type(num) != int:
-		logging.error("TypeError: newdeck function was given a non-integer, but requires an integer to prevent errors.")
-		raise TypeError("newdeck function was given a non-integer, but requires an integer to prevent errors.")
+		logging.error("TypeError: new_deck function was given a non-integer, but requires an integer to prevent errors.")
+		raise TypeError("new_deck function was given a non-integer, but requires an integer to prevent errors.")
 		return None
 	if int(num) > 8 or int(num) <= 0:
 		return TooManyDecksError
