@@ -54,8 +54,6 @@ def start_server():
 	
 
 def accept_clients(server, yeah):
-	pass
-
 	# flips the start and stop buttons
 	startButton.config(state=tk.DISABLED)
 	stopButton.config(state=tk.NORMAL)
