@@ -15,6 +15,7 @@ logging.basicConfig(level=logging.DEBUG, filename=f'logs/serverlog-{str(today.mo
 from deck import card
 import deck
 import balance
+import logic
 #import packet
 
 cur_deck = deck.new_deck(4)
@@ -40,7 +41,7 @@ dealer_total += card.number
 active = True
 
 while active:
-	result = deck.result(player_cards, dealer_cards)
+	result = logic.result(player_cards, dealer_cards)
 	print(result)
 	if "active" not in result:
 		if "win" in result:
