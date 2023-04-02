@@ -42,11 +42,6 @@ def start_server():
 	logging.debug("Creating server socket object.")
 	server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-	# starts listening for new players
-	logging.info("Initializing listener for new players.")
-	server.bind((HOST_ADDR, HOST_PORT))
-	server.listen(5)
-
 	# starts a thread that listens for new players
 	logging.info("Moving listener to seperate thread.")
 	threading._start_new_thread(accept_clients, (server, " "))
@@ -54,6 +49,13 @@ def start_server():
 	
 
 def accept_clients(server, yeah):
+	global server, HOST_PORT, HOST_ADDR, startButton, stopButton
+	
+	# starts server process
+	logging.info("Initializing listener for new players.")
+	server.bind((HOST_ADDR, HOST_PORT))
+	server.listen()
+	
 	# flips the start and stop buttons
 	startButton.config(state=tk.DISABLED)
 	stopButton.config(state=tk.NORMAL)
