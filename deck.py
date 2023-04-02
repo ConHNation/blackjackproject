@@ -26,9 +26,9 @@ class card:
  	'''
 	def __init__(self, card_type, card_num):
 		self.type = card_type
-		if card_type in ["J", "Q", "K"]:
+		if card_num in ["J", "Q", "K"]:
 			self.number = 10
-		elif card_type == "A":
+		elif card_num == "A":
 			self.number = 11
 		else:
 			self.number = card_num
@@ -43,11 +43,11 @@ class card:
 
 # custom error for if there are too many decks
 class TooManyDecksError(Exception):
-    "Too many decks were requested."
-    pass
+  "Too many decks were requested."
+  pass
 
 # generates the deck
-def new_deck(num: int):
+def new_deck(num):
 	logging.info("Generating new deck...")
 	if type(num) != int:
 		logging.error("TypeError: new_deck function was given a non-integer, but requires an integer to prevent errors.")
@@ -66,18 +66,43 @@ def new_deck(num: int):
 		shuffle(deck)
 		return deck
 
-def result(cards, dealertotal, finish):
+def result(playercards, dealercards, finish = False):
 	# exception manager
-	if type(cards) != table:
-		return Exception(f"cards should be a table, not {type(cards)}.")
-	if type(dealertotal) != int:
-		return TypeError(f"dealer total should be a int, not {type(dealertotal)}.")
-	if type(finish != bool):
+	if type(playercards) != list:
+		return TypeError(f"cards should be a list, not {type(playercards)}.")
+	if type(dealercards) != list:
+		return TypeError(f"dealer total should be a int, not {type(dealercards)}.")
+	if type(finish) != bool:
 		return TypeError(f"finish should be a boolean string, not {type(finish)}.")
 	# function
 	playertotal = 0
-	for card in cards:
-		playertotal += card.number
+	for card in playercards:
+		playertotal += int(card.number)
+	dealertotal = 0
+	for card in dealercards:
+		dealertotal += int(card.number)
+	# win calculator
+	# if dealer bust and user under 21
 	if finish:
-		# win calculator
-		# if dealer bust and user under 21
+		if (playertotal == dealertotal) and (dealertotal <= 21):
+			return f"push.{playertotal}"
+		if (playertotal > 21) and (dealertotal <= 21):
+			return f"loss.{playertotal}"
+		elif (playertotal <= 21) and (dealertotal > 21):
+			return f"win.{playertotal}"
+		elif playertotal > dealertotal:
+			return f"win.{playertotal}"
+		elif playertotal < dealertotal:
+			return f"loss.{playertotal}"
+		else:
+			return Exception(f"No winner was determined. Dealer: {dealertotal} Player: {playertotal}")
+	elif playertotal > 21:
+		return f"bust.{playertotal}"
+	elif dealertotal > 21:
+		return f"win.{playertotal}"
+	elif dealertotal == 21:
+		return f"loss.{playertotal}"
+	elif dealertotal == 21:
+		return f"loss.{playertotal}"
+	else:
+		return f"active.{playertotal}"
