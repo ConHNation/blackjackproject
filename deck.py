@@ -26,12 +26,7 @@ class card:
  	'''
 	def __init__(self, card_type, card_num):
 		self.type = card_type
-		if card_num in ["J", "Q", "K"]:
-			self.number = 10
-		elif card_num == "A":
-			self.number = 11
-		else:
-			self.number = card_num
+		self.number = card_num
 
 	def __str__(self):
 		return f"{self.type} {self.number}"
@@ -41,6 +36,23 @@ class card:
 			return NotImplementedError
 		return (self.number == other.number)
 
+def gettotal(deck):
+	total = 0
+	for x in deck:
+		if type(x) != card:
+			return TypeError(f"expected card object, not {type(x)}")
+		elif x.number == "A":
+			total += 11
+		elif x.number in ["J", "K", "Q"]:
+			total += 10
+		elif type(x.number) != int:
+			return TypeError(f"card number should be integer or face card, not {type(x.number)}.")
+		elif x.number > 11:
+			return Exception("stop cheating")
+		else:
+			total += x.number
+	return total	
+		
 # custom error for if there are too many decks
 class TooManyDecksError(Exception):
   "Too many decks were requested."

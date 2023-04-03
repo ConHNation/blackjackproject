@@ -23,10 +23,17 @@ def get_balance(username):
 	global user_balances
 	return user_balances[username]
 
-def remove_balance(username):
-  username - create_balance
+def remove_balance(username, amount):
+	user_balances[username] -= amount
+	return user_balances[username]
 
-def add_balance(username):
-  username + create_balance
-  
+def add_balance(username, amount):
+	user_balances[username] += amount
+	return user_balances[username]
+
+def has_wager(username, amount):
+	if user_balances[username] >= amount:
+		return True
+	else:
+		return False
   

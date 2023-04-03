@@ -20,113 +20,151 @@ import logic
 
 cur_deck = deck.new_deck(4)
 
-dealer_cards = []
-player_cards = []
-
-player_total = 0
-dealer_total = 0
-
-card = cur_deck.pop()
-player_cards.append(card)
-player_total += card.number
-
-card = cur_deck.pop()
-player_cards.append(card)
-player_total += card.number
-
-card = cur_deck.pop()
-dealer_cards.append(card)
-dealer_total += card.number
-
 active = True
 
+difficulty = input("Select difficulty (easy, medium, hard): ")
+
+if difficulty == "easy":
+	payout = 2
+elif difficulty == "medium":
+	payout = 1.75
+elif difficulty == "hard":
+	payout = 1.5
+else:
+	payout = 1.5
+
+userbalance = balance.create_balance("main", difficulty.lower())
+
+wager = ""
+
 while active:
+	if userbalance <= 100:
+		print("--------------------")
+		print("\nyou lost all your money...")
+		print("\ngambling is an addiction")
+		print("get some help")
+		break
+	print("--------------------")
+	print(f"Your balance: {userbalance}")
+
+	wager = input(f"Table pays {payout}x\nSay amount to wager or 'q' to quit (Min bet: 100): ")
+	while float(wager) < 100:
+		wager = input("Below minimum bet.\nSay amount to wager or 'q' to quit (Min bet: 100): ")
+	while not balance.has_wager("main", int(wager)):
+		wager = input(f"You don't have enough money. Balance: {userbalance}\n\nSay amount to wager or 'q' to quit (Min bet: 100): ")
+
+	if "q" in wager.lower():
+		break
+	else:
+		wager = float(wager)
+		
+	userbalance = balance.remove_balance("main", wager)
+
+	print("\nGood luck.")
+
+	dealer_cards = []
+	player_cards = []
+
+	player_cards.append(cur_deck.pop())
+	player_cards.append(cur_deck.pop())
+
+	dealer_cards.append(cur_deck.pop())
+	
+	print("--------------------")
 	result = logic.result(player_cards, dealer_cards)
-	print(result)
 	if "active" not in result:
 		if "win" in result:
+			print("--------------------")
 			print("you won")
-			print(f"\nYou ({player_total}):")
+			print(f"\nYou ({deck.gettotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({dealer_total}):")
+			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
 			for card in dealer_cards:
 				print(card)
-			active = False
+			userbalance = balance.add_balance("main", wager*payout)
 		elif "loss" in result:
+			print("--------------------")
 			print("you lost")
-			print(f"\nYou ({player_total}):")
+			print(f"\nYou ({deck.gettotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({dealer_total}):")
+			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
 			for card in dealer_cards:
 				print(card)
-			active = False
 		elif "push" in result:
+			print("--------------------")
 			print("you tied - push")
-			print(f"\nYou ({player_total}):")
+			print(f"\nYou ({deck.gettotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({dealer_total}):")
+			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
 			for card in dealer_cards:
 				print(card)
+			userbalance = balance.add_balance("main", wager*payout)
 		else:
 			print("error")
 			active = False
-	print(f"\nYou ({player_total}):")
+	print(f"You ({deck.gettotal(player_cards)}):")
 	for card in player_cards:
 		print(card)
-	print(f"\nDealer ({dealer_total}):")
+	print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
 	for card in dealer_cards:
 		print(card)
-	choice = input(f'\n\nSay "hit" or "stand": ')
-	if choice == "hit":
-		while choice == "hit":
-			card = cur_deck.pop()
-			player_cards.append(card)
-			player_total += card.number
-			print(f"You ({player_total}):")
+	choice = input('\nSay "hit" or "stand": ')
+	while choice == "hit":
+		card = cur_deck.pop()
+		player_cards.append(card)
+		if logic.result(player_cards, dealer_cards) == "bust":
+			print("\nyou busted")
+			choice = "stand"
+		else:
+			print("--------------------")
+			print(f"You ({deck.gettotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"Dealer ({dealer_total}):")
+			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
 			for card in dealer_cards:
 				print(card)
-			choice = input(f'\n\nSay "hit" or "stand": ')
-	elif choice == "stand":
-		for card in dealer_cards:
-			dealer_total += card.number
+			choice = input('\nSay "hit" or "stand": ')
+	if choice == "stand":
+		dealer_total = deck.gettotal(dealer_cards)
 		while dealer_total < 17:
 			card = cur_deck.pop()
 			dealer_cards.append(card)
-			dealer_total += card.number
-		gameresult = deck.result(player_cards, dealer_cards, True)
-		if "win" in gameresult:
-			print("\nyou won")
-			print(f"\nYou ({player_total}):")
-			for card in player_cards:
-				print(card)
-			print(f"\nDealer ({dealer_total}):")
-			for card in dealer_cards:
-				print(card)
-			active = False
-		elif "loss" in gameresult:
-			print("\nyou lost")
-			print(f"\nYou ({player_total}):")
-			for card in player_cards:
-				print(card)
-			print(f"\nDealer ({dealer_total}):")
-			for card in dealer_cards:
-				print(card)
-			active = False
-		elif "push" in gameresult:
+			dealer_total = deck.gettotal(dealer_cards)
+		game_result = logic.result(player_cards, dealer_cards, True)
+		if game_result == "win":
+			print("--------------------")
 			print("you won")
-			print(f"\nYou ({player_total}):")
+			print(f"\nYou ({deck.gettotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({dealer_total}):")
+			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
 			for card in dealer_cards:
 				print(card)
-			active = False
+			userbalance = balance.add_balance("main", wager*payout)
+		elif game_result == "loss":
+			print("--------------------")
+			print("you lost")
+			print(f"\nYou ({deck.gettotal(player_cards)}):")
+			for card in player_cards:
+				print(card)
+			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
+			for card in dealer_cards:
+				print(card)
+		elif game_result == "push":
+			print("--------------------")
+			print("you tied - push")
+			print(f"\nYou ({deck.gettotal(player_cards)}):")
+			for card in player_cards:
+				print(card)
+			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
+			for card in dealer_cards:
+				print(card)
+			userbalance = balance.add_balance("main", wager)
 		else:
 			print("error")
-			active = False
+	else:
+		print("error")
+		active = False

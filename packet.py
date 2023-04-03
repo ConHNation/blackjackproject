@@ -11,10 +11,10 @@ import tkinter as tk
 server = None
 HOST_ADDR = "127.0.0.1"
 HOST_PORT = 1250
-client_name = " "
+
+# local variables
 clients = []
 clients_names = []
-player_data = []
 
 # packet reciever
 logging.info("Initializing packet reciever.")
