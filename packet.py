@@ -1,3 +1,8 @@
+# We were originally gonna make this multiplayer
+# but couldn't figure it out. Here's the code for
+# it though.
+
+'''
 # Packet reviever, sender and translator
 
 # dependencies
@@ -71,3 +76,4 @@ def stop_server():
 logging.info("Loading admin panel...")
 panel.mainloop()
 logging.info("Admin panel loaded.")
+'''

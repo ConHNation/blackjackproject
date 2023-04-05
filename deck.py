@@ -76,5 +76,6 @@ def new_deck(num):
 				for y in all_card_nums:
 					deck.append(card(x, y))
 		shuffle(deck)
+		logging.info("New deck has been generated successfully.")
 		return deck
 

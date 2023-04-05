@@ -6,7 +6,6 @@ authors = ["Connor Hayden", "Dylan Lovell", "Mateus Rudzki", "Lance Hinojosa"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-tkthread = "^0.5.2"
 
 [tool.poetry.dev-dependencies]
 

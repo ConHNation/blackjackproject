@@ -1,5 +1,8 @@
-#Connor Hayden, Dylan Lovell, and Mateus Rudzki are the other peple im collaborating with.
+# Made by Lance Hinojosa
 # Module to manage balances.
+
+# dependencies
+import logging
 
 user_balances = {}
 
@@ -9,14 +12,18 @@ def create_balance(username, difficulty):
 		return TypeError
 	elif difficulty == "easy":
 		user_balances[username] = 2000
+		logging.info(f"User {username} balance successfully created.")
 		return 2000
 	elif difficulty == "medium":
 		user_balances[username] = 1000
+		logging.info(f"User {username} balance successfully created.")
 		return 1000
 	elif difficulty == "hard":
 		user_balances[username] = 500
+		logging.info(f"User {username} balance successfully created.")
 		return 500
 	else:
+		logging.error(f"Error when creating user {username} balance.")
 		return Exception
 
 def get_balance(username):
