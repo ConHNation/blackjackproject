@@ -6,14 +6,17 @@ import logging
 
 user_balances = {}
 
+# creates balance for user
 def create_balance(username, difficulty):
 	global user_balances
 	if difficulty not in ["easy","medium","hard"]:
 		return TypeError
+    # if balance is easy, you'll get 2000
 	elif difficulty == "easy":
 		user_balances[username] = 2000
 		logging.info(f"User {username} balance successfully created.")
 		return 2000
+    # if balance 
 	elif difficulty == "medium":
 		user_balances[username] = 1000
 		logging.info(f"User {username} balance successfully created.")

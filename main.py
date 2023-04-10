@@ -23,9 +23,11 @@ cur_deck = deck.new_deck(4)
 # local variable
 active = True
 
+# logging setup
 logging.debug("Selecting difficulty.")
 difficulty = input("Select difficulty (easy, medium, hard): ")
 
+# debug difficulty
 if difficulty == "debug":
 	logging.getLogger().setLevel(level=logging.DEBUG)
 	logging.info("Debug mode activated.")
