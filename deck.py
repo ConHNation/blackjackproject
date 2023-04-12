@@ -5,7 +5,7 @@ from random import shuffle
 import logging
 import threading
 # all possible cards
-all_card_nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
+all_card_nums = [2, 3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A"]
 all_card_types = ["♠", "♣", "♦", "♥"]
 
 # card class - this allows me to make the cards python objects, which makes them easier to compare and reduces errors
@@ -37,21 +37,30 @@ class card:
 		return (self.number == other.number)
 
 def gettotal(deck):
-	total = 0
+	total1 = 0
+	total2 = 0
 	for x in deck:
 		if type(x) != card:
 			return TypeError(f"expected card object, not {type(x)}")
 		elif x.number == "A":
-			total += 11
+			total2 = total1+1
+			total1 += 11
 		elif x.number in ["J", "K", "Q"]:
-			total += 10
+			total1 += 10
+			if total2 > 0:
+				total2 += 10
 		elif type(x.number) != int:
 			return TypeError(f"card number should be integer or face card, not {type(x.number)}.")
 		elif x.number > 11:
 			return Exception("stop cheating")
 		else:
-			total += x.number
-	return total	
+			total1 += x.number
+			if total2 > 0:
+				total2 += x.number
+	if total2 > 0:
+		return [total1, total2]
+	else:
+		return total1
 		
 # custom error for if there are too many decks
 class TooManyDecksError(Exception):

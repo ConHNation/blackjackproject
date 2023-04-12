@@ -30,10 +30,9 @@ difficulty = input("Select difficulty (easy, medium, hard): ")
 # debug difficulty
 if difficulty == "debug":
 	logging.getLogger().setLevel(level=logging.DEBUG)
-	logging.info("Debug mode activated.")
+	logging.info("Debug mode selected.")
 	print("Debug mode activated.")
-	difficulty = input("Select difficulty (easy, medium, hard): ")
-
+	payout = 2
 if difficulty == "easy":
 	logging.info("Easy difficulty selected.")
 	payout = 2
@@ -140,10 +139,10 @@ while active:
 		else:
 			print("error")
 			active = False
-	print(f"You ({deck.gettotal(player_cards)}):")
+	print(f"You ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
 	for card in player_cards:
 		print(card)
-	print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
+	print(f"Dealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):")
 	for card in dealer_cards:
 		print(card)
 	choice = input('\nSay "hit" or "stand": ')
@@ -158,31 +157,41 @@ while active:
 			choice = "stand"
 		else:
 			print("--------------------")
-			print(f"You ({deck.gettotal(player_cards)}):")
+			print(f"You ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
+			print(f"Dealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):")
 			for card in dealer_cards:
 				print(card)
 			choice = input('\nSay "hit" or "stand": ')
 	if choice == "stand":
 		logging.info("User stood. Calculating result...")
 		dealer_total = deck.gettotal(dealer_cards)
-		while dealer_total < 17:
-			logging.debug("Dealer hit.")
-			card = cur_deck.pop()
-			dealer_cards.append(card)
-			logging.debug(f"Drawn card: {card}")
-			dealer_total = deck.gettotal(dealer_cards)
+		if type(dealer_total) == list:
+			while (dealer_total[0] < 17 or dealer_total[1] < 17):
+				logging.debug("Dealer hit.")
+				card = cur_deck.pop()
+				dealer_cards.append(card)
+				logging.debug(f"Drawn card: {card}")
+				dealer_total = deck.gettotal(dealer_cards)
+		else:
+			while dealer_total < 17:
+				logging.debug("Dealer hit.")
+				card = cur_deck.pop()
+				dealer_cards.append(card)
+				logging.debug(f"Drawn card: {card}")
+				dealer_total = deck.gettotal(dealer_cards)
+				if type(dealer_total) == list:
+					break
 		game_result = logic.result(player_cards, dealer_cards, True)
 		if game_result == "win":
 			logging.info("User won.")
 			print("--------------------")
 			print("you won")
-			print(f"\nYou ({deck.gettotal(player_cards)}):")
+			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
+			print(f"\nDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):")
 			for card in dealer_cards:
 				print(card)
 			userbalance = balance.add_balance("main", wager*payout)
@@ -191,19 +200,19 @@ while active:
 			logging.info("User lost.")
 			print("--------------------")
 			print("you lost")
-			print(f"\nYou ({deck.gettotal(player_cards)}):")
+			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
+			print(f"\nDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):")
 			for card in dealer_cards:
 				print(card)
 		elif game_result == "push":
 			print("--------------------")
 			print("you tied - push")
-			print(f"\nYou ({deck.gettotal(player_cards)}):")
+			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
+			print(f"\nDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):")
 			for card in dealer_cards:
 				print(card)
 			userbalance = balance.add_balance("main", wager)

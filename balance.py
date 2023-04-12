@@ -9,22 +9,27 @@ user_balances = {}
 # creates balance for user
 def create_balance(username, difficulty):
 	global user_balances
-	if difficulty not in ["easy","medium","hard"]:
+	if difficulty not in ["easy","medium","hard", "debug"]:
 		return TypeError
-    # if balance is easy, you'll get 2000
+    # if difficulty is easy, you'll get 2000
 	elif difficulty == "easy":
 		user_balances[username] = 2000
 		logging.info(f"User {username} balance successfully created.")
 		return 2000
-    # if balance 
+    # if difficulty is medium, you'll get 1000
 	elif difficulty == "medium":
 		user_balances[username] = 1000
 		logging.info(f"User {username} balance successfully created.")
 		return 1000
+		# if difficulty is hard, you'll get 500
 	elif difficulty == "hard":
 		user_balances[username] = 500
 		logging.info(f"User {username} balance successfully created.")
 		return 500
+	elif difficulty == "debug":
+		user_balances[username] = 99999
+		logging.info(f"User {username} has activated debug mode with a balance of $99,999.")
+		return 1000000
 	else:
 		logging.error(f"Error when creating user {username} balance.")
 		return Exception
