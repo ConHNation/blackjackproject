@@ -27,8 +27,8 @@ def create_balance(username, difficulty):
 		logging.info(f"User {username} balance successfully created.")
 		return 500
 	elif difficulty == "debug":
-		user_balances[username] = 99999
-		logging.info(f"User {username} has activated debug mode with a balance of $99,999.")
+		user_balances[username] = 1000000
+		logging.info(f"User {username} has activated debug mode with a balance of $1000000.")
 		return 1000000
 	else:
 		logging.error(f"Error when creating user {username} balance.")

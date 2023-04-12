@@ -109,7 +109,7 @@ while active:
 			print(f"\nYou ({deck.gettotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
+			print(f"\n\u001b[31mDealer ({deck.gettotal(dealer_cards)}):")
 			for card in dealer_cards:
 				print(card)
 			userbalance = balance.add_balance("main", wager*payout)
@@ -121,7 +121,7 @@ while active:
 			print(f"\nYou ({deck.gettotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
+			print(f"\n\u001b[31mDealer ({deck.gettotal(dealer_cards)}):\u001b[0m")
 			for card in dealer_cards:
 				print(card)
 		elif "push" in result:
@@ -131,7 +131,7 @@ while active:
 			print(f"\nYou ({deck.gettotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({deck.gettotal(dealer_cards)}):")
+			print(f"\n\u001b[31mDealer ({deck.gettotal(dealer_cards)}):\u001b[0m")
 			for card in dealer_cards:
 				print(card)
 			userbalance = balance.add_balance("main", wager*payout)
@@ -139,10 +139,10 @@ while active:
 		else:
 			print("error")
 			active = False
-	print(f"You ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
+	print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
 	for card in player_cards:
 		print(card)
-	print(f"Dealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):")
+	print(f"\n\u001b[31mDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):\u001b[0m")
 	for card in dealer_cards:
 		print(card)
 	choice = input('\nSay "hit" or "stand": ')
@@ -157,10 +157,10 @@ while active:
 			choice = "stand"
 		else:
 			print("--------------------")
-			print(f"You ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
+			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"Dealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):")
+			print(f"\n\u001b[31m\033[4mDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):\u001b[0m\033[0m")
 			for card in dealer_cards:
 				print(card)
 			choice = input('\nSay "hit" or "stand": ')
@@ -191,7 +191,7 @@ while active:
 			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):")
+			print(f"\n\u001b[31m\033[4mDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):\u001b[0m\033[0m")
 			for card in dealer_cards:
 				print(card)
 			userbalance = balance.add_balance("main", wager*payout)
@@ -203,7 +203,7 @@ while active:
 			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):")
+			print(f"\n\u001b[31mDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):\u001b[0m")
 			for card in dealer_cards:
 				print(card)
 		elif game_result == "push":
@@ -212,7 +212,7 @@ while active:
 			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\nDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):")
+			print(f"\n\u001b[31mDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):\u001b[0m")
 			for card in dealer_cards:
 				print(card)
 			userbalance = balance.add_balance("main", wager)
