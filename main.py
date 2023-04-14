@@ -1,10 +1,11 @@
-# Blackjack - Server (Back-end) Program
+# Blackjack
 # CSP Final Project
-# Made by Connor Hayden, Dylan Lovell (I'm working on this module), Mateus Rudzki and Lance Hinojosa
 
 # start logger
 import logging
 from datetime import datetime
+from time import sleep
+import os
 
 # logging configuration
 today = datetime.today()
@@ -26,6 +27,10 @@ active = True
 # logging setup
 logging.debug("Selecting difficulty.")
 difficulty = input("Select difficulty (easy, medium, hard): ")
+
+# terminal clear function
+def clearscreen():
+  os.system('cls' if os.name=='nt' else 'clear')
 
 # debug difficulty
 if difficulty == "debug":
@@ -52,10 +57,14 @@ wager = ""
 while active:
 	if userbalance <= 100:
 		logging.info("User has run out of money.")
-		print("--------------------")
+		print("\nEnding game in 3 seconds...")
+		sleep(3)
+		clearscreen()
+		print("-"*28)
 		print("you lost all your money...")
 		print("\ngambling is an addiction")
 		print("get some help")
+		print("-"*28)
 		logging.info("Ending game...")
 		break
 	print("--------------------")
@@ -106,10 +115,10 @@ while active:
 			print("--------------------")
 			logging.info(f"User won.")
 			print("you won")
-			print(f"\nYou ({deck.gettotal(player_cards)}):")
+			print(f"\nYou ({deck.getprintedtotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"\n\u001b[31mDealer ({deck.gettotal(dealer_cards)}):")
+			print(f"\n\u001b[31mDealer ({deck.getprintedtotal(dealer_cards)}):")
 			for card in dealer_cards:
 				print(card)
 			userbalance = balance.add_balance("main", wager*payout)
@@ -118,20 +127,20 @@ while active:
 			logging.info(f"User lost. Dealer won.")
 			print("--------------------")
 			print("you lost")
-			print(f"\nYou ({deck.gettotal(player_cards)}):")
+			print(f"\nYou ({deck.getprintedtotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"\n\u001b[31mDealer ({deck.gettotal(dealer_cards)}):\u001b[0m")
+			print(f"\n\u001b[31mDealer ({deck.getprintedtotal(dealer_cards)}):\u001b[0m")
 			for card in dealer_cards:
 				print(card)
 		elif "push" in result:
 			logging.info(f"User tied. Push.")
 			print("--------------------")
 			print("you tied - push")
-			print(f"\nYou ({deck.gettotal(player_cards)}):")
+			print(f"\nYou ({deck.getprintedtotal(player_cards)}):")
 			for card in player_cards:
 				print(card)
-			print(f"\n\u001b[31mDealer ({deck.gettotal(dealer_cards)}):\u001b[0m")
+			print(f"\n\u001b[31mDealer ({deck.getprintedtotal(dealer_cards)}):\u001b[0m")
 			for card in dealer_cards:
 				print(card)
 			userbalance = balance.add_balance("main", wager*payout)
@@ -139,10 +148,10 @@ while active:
 		else:
 			print("error")
 			active = False
-	print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
+	print(f"You ({str(deck.getprintedtotal(player_cards)).replace('[', '').replace(']', '')}):")
 	for card in player_cards:
 		print(card)
-	print(f"\n\u001b[31mDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):\u001b[0m")
+	print(f"\nDealer ({str(deck.getprintedtotal(dealer_cards)).replace('[', '').replace(']', '')}):")
 	for card in dealer_cards:
 		print(card)
 	choice = input('\nSay "hit" or "stand": ')
@@ -157,10 +166,10 @@ while active:
 			choice = "stand"
 		else:
 			print("--------------------")
-			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
+			print(f"You ({str(deck.getprintedtotal(player_cards)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\n\u001b[31m\033[4mDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):\u001b[0m\033[0m")
+			print(f"\nDealer ({str(deck.getprintedtotal(dealer_cards)).replace('[', '').replace(']', '')}):")
 			for card in dealer_cards:
 				print(card)
 			choice = input('\nSay "hit" or "stand": ')
@@ -187,11 +196,11 @@ while active:
 		if game_result == "win":
 			logging.info("User won.")
 			print("--------------------")
-			print("you won")
-			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
+			print("You won!")
+			print(f"\nYou ({str(deck.getprintedtotal(player_cards, True)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\n\u001b[31m\033[4mDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):\u001b[0m\033[0m")
+			print(f"\nDealer ({str(deck.getprintedtotal(dealer_cards, True)).replace('[', '').replace(']', '')}):")
 			for card in dealer_cards:
 				print(card)
 			userbalance = balance.add_balance("main", wager*payout)
@@ -199,20 +208,20 @@ while active:
 		elif game_result == "loss":
 			logging.info("User lost.")
 			print("--------------------")
-			print("you lost")
-			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
+			print("You lost. Better luck next time.")
+			print(f"\nYou ({str(deck.getprintedtotal(player_cards, True)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\n\u001b[31mDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):\u001b[0m")
+			print(f"\nDealer ({str(deck.getprintedtotal(dealer_cards, True)).replace('[', '').replace(']', '')}):")
 			for card in dealer_cards:
 				print(card)
 		elif game_result == "push":
 			print("--------------------")
-			print("you tied - push")
-			print(f"\nYou ({str(deck.gettotal(player_cards)).replace('[', '').replace(']', '')}):")
+			print("You tied, push.")
+			print(f"\nYou ({str(deck.getprintedtotal(player_cards, True)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
-			print(f"\n\u001b[31mDealer ({str(deck.gettotal(dealer_cards)).replace('[', '').replace(']', '')}):\u001b[0m")
+			print(f"\nDealer ({str(deck.getprintedtotal(dealer_cards, True)).replace('[', '').replace(']', '')}):")
 			for card in dealer_cards:
 				print(card)
 			userbalance = balance.add_balance("main", wager)

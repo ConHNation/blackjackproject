@@ -21,34 +21,10 @@ def result(playercards, dealercards, finish = False):
 	dealertemptotal = deck.gettotal(dealercards)
 
 	# ace handler - player
-	if type(playertemptotal) == int:
-		playertotal = playertemptotal
-	elif type(playertemptotal) == list:
-		if (playertemptotal[0] > 21) and (playertemptotal[1] < 21):
-			logging.debug("1st total over 21, using 2nd total.")
-			playertotal = playertemptotal[1]
-		elif (playertemptotal[0] > 21) and (playertemptotal[1] > 21):
-			logging.debug("Both totals over 21, using 2nd total.")
-			playertotal = playertemptotal[1]
-		else:
-			playertotal = playertemptotal[0]
-	else:
-		logging.error(f"The correct total to use could not be calculated with total {playertemptotal}.")
+	playertotal = deck.getacetotal(playertemptotal)
 
 	# ace handler - dealer
-	if type(dealertemptotal) == int:
-		dealertotal = dealertemptotal
-	elif type(dealertemptotal) == list:
-		if (dealertemptotal[0] > 21) and (dealertemptotal[1] < 21):
-			logging.debug("1st total over 21, using 2nd total.")
-			playertotal = dealertemptotal[1]
-		elif (dealertemptotal[0] > 21) and (dealertemptotal[1] > 21):
-			logging.debug("Both totals over 21, using 2nd total.")
-			dealertotal = dealertemptotal[1]
-		else:
-			dealertotal = dealertemptotal[0]
-	else:
-		logging.error(f"The correct total to use could not be calculated with total {dealertemptotal}.")
+	dealertotal = deck.getacetotal(dealertemptotal)
 		
 	# logs result for debugging purpouses
 	logging.debug(f"Result | Player: {playertotal} Dealer: {dealertotal}")

@@ -61,6 +61,61 @@ def gettotal(deck):
 		return [total1, total2]
 	else:
 		return total1
+
+def getprintedtotal(deck, finish = False):
+	total1 = 0
+	total2 = 0
+	for x in deck:
+		if type(x) != card:
+			return TypeError(f"expected card object, not {type(x)}")
+		elif x.number == "A":
+			total2 = total1+1
+			total1 += 11
+		elif x.number in ["J", "K", "Q"]:
+			total1 += 10
+			if total2 > 0:
+				total2 += 10
+		elif type(x.number) != int:
+			return TypeError(f"card number should be integer or face card, not {type(x.number)}.")
+		elif x.number > 11:
+			return Exception("stop cheating")
+		else:
+			total1 += x.number
+			if total2 > 0:
+				total2 += x.number
+	if total2 > 0:
+		if finish:
+			if total1 <= 21 and total2 < total1:
+				return total1
+			elif total2 <= 21 and total1 < total2:
+				return total2
+			else:
+				return total2
+		elif total1 > 21 and total2 < 21:
+			return total2
+		elif total2 > 21:
+			return total2
+		else:
+			return [total1, total2]
+	else:
+		return total1
+
+# determines which total the game should use
+def getacetotal(total):
+	if type(total) == int:
+		return total
+	elif type(total) == list:
+		if (total[0] > 21) and (total[1] < 21):
+			logging.debug("1st total over 21, using 2nd total.")
+			return total[1]
+		elif (total[0] > 21) and (total[1] > 21):
+			logging.debug("Both totals over 21, using 2nd total.")
+			return total[1]
+		else:
+			return total[0]
+	else:
+		logging.error(f"The correct total to use could not be calculated with total {total}.")
+		return Exception(f"The correct total to use could not be calculated with the total {total}")
 		
 # custom error for if there are too many decks
 class TooManyDecksError(Exception):

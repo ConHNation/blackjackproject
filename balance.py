@@ -1,4 +1,3 @@
-# Made by Lance Hinojosa
 # Module to manage balances.
 
 # dependencies
