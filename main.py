@@ -103,10 +103,10 @@ while active:
 
 	player_cards.append(cur_deck.pop())
 	player_cards.append(cur_deck.pop())
-	logging.debug(f"Player cards generated - {player_cards}")
+	logging.debug(f"Player cards generated - {str(player_cards)}")
 
 	dealer_cards.append(cur_deck.pop())
-	logging.debug(f"Dealer cards generated - {dealer_cards}")
+	logging.debug(f"Dealer cards generated - {str(dealer_cards)}")
 	
 	print("--------------------")
 	result = logic.result(player_cards, dealer_cards)

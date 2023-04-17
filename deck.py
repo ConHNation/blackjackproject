@@ -36,6 +36,9 @@ class card:
 			return NotImplementedError
 		return (self.number == other.number)
 
+	def __repr__(self):
+		return f"{self.type} {self.number}"
+
 def gettotal(deck):
 	total1 = 0
 	total2 = 0
@@ -61,6 +64,7 @@ def gettotal(deck):
 		return [total1, total2]
 	else:
 		return total1
+
 
 def getprintedtotal(deck, finish = False):
 	total1 = 0

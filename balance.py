@@ -39,10 +39,12 @@ def get_balance(username):
 
 def remove_balance(username, amount):
 	user_balances[username] -= amount
+	logging.debug(f"Removed {amount} from user {username}'s balance.")
 	return user_balances[username]
 
 def add_balance(username, amount):
 	user_balances[username] += amount
+	logging.debug(f"Added {amount} to user {username}'s balance.")
 	return user_balances[username]
 
 def has_wager(username, amount):
