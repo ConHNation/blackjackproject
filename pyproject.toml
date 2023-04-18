@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "Blackjack - Computer Science Principals Final Project"
-version = "0.1.0"
-description = "A game designed to play blackjack with other users on seperate devices or with a CPU. This was made as the final project for a Computer Science Principles class, made by the authors listed below."
-authors = ["Connor Hayden", "Dylan Lovell", "Mateus Rudzki", "Lance Hinojosa"]
+name = "Blackjack - AP CSP Final Project"
+version = "0.11.0"
+description = "A game designed to play blackjack with a computer-controlled dealer. This was made as the final project for a AP Computer Science Principles class."
+authors = ["Connor Hayden - connor@conhnationservices.com"]
 
 [tool.poetry.dependencies]
 python = "^3.10"

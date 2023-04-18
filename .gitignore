@@ -1,1 +1,9 @@
 /logs
+packet.py
+/venv
+/.git
+/.config
+/__pycache__
+.replit
+replit.nix
+/.upm

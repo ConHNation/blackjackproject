@@ -5,7 +5,6 @@
 import logging
 from datetime import datetime
 from time import sleep
-import os
 
 # logging configuration
 today = datetime.today()
@@ -17,6 +16,8 @@ from deck import card
 import deck
 import balance
 import logic
+import terminal
+
 # import packet
 logging.debug("Generating new deck.")
 cur_deck = deck.new_deck(4)
@@ -27,10 +28,6 @@ active = True
 # logging setup
 logging.debug("Selecting difficulty.")
 difficulty = input("Select difficulty (easy, medium, hard): ")
-
-# terminal clear function
-def clearscreen():
-  os.system('cls' if os.name=='nt' else 'clear')
 
 # debug difficulty
 if difficulty == "debug":
@@ -59,7 +56,7 @@ while active:
 		logging.info("User has run out of money.")
 		print("\nEnding game in 3 seconds...")
 		sleep(3)
-		clearscreen()
+		terminal.clearscreen()
 		print("-"*28)
 		print("you lost all your money...")
 		print("\ngambling is an addiction")
@@ -67,7 +64,7 @@ while active:
 		print("-"*28)
 		logging.info("Ending game...")
 		break
-	print("--------------------")
+	print("-"*28)
 	logging.debug(f"Current Balance: {userbalance}")
 	print(f"Your balance: {userbalance}")
 
@@ -108,11 +105,11 @@ while active:
 	dealer_cards.append(cur_deck.pop())
 	logging.debug(f"Dealer cards generated - {str(dealer_cards)}")
 	
-	print("--------------------")
+	print("-"*28)
 	result = logic.result(player_cards, dealer_cards)
 	if "active" not in result:
 		if "win" in result:
-			print("--------------------")
+			print("-"*28)
 			logging.info(f"User won.")
 			print("you won")
 			print(f"\nYou ({deck.getprintedtotal(player_cards)}):")
@@ -125,7 +122,7 @@ while active:
 			logging.debug(f"New Balance: {userbalance}")
 		elif "loss" in result:
 			logging.info(f"User lost. Dealer won.")
-			print("--------------------")
+			print("-"*28)
 			print("you lost")
 			print(f"\nYou ({deck.getprintedtotal(player_cards)}):")
 			for card in player_cards:
@@ -135,7 +132,7 @@ while active:
 				print(card)
 		elif "push" in result:
 			logging.info(f"User tied. Push.")
-			print("--------------------")
+			print("-"*28)
 			print("you tied - push")
 			print(f"\nYou ({deck.getprintedtotal(player_cards)}):")
 			for card in player_cards:
@@ -165,7 +162,7 @@ while active:
 			print("\nyou busted")
 			choice = "stand"
 		else:
-			print("--------------------")
+			print("-"*28)
 			print(f"You ({str(deck.getprintedtotal(player_cards)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
 				print(card)
@@ -195,7 +192,7 @@ while active:
 		game_result = logic.result(player_cards, dealer_cards, True)
 		if game_result == "win":
 			logging.info("User won.")
-			print("--------------------")
+			print("-"*28)
 			print("You won!")
 			print(f"\nYou ({str(deck.getprintedtotal(player_cards, True)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
@@ -207,7 +204,7 @@ while active:
 			logging.debug(f"New Balance: {userbalance}")
 		elif game_result == "loss":
 			logging.info("User lost.")
-			print("--------------------")
+			print("-"*28)
 			print("You lost. Better luck next time.")
 			print(f"\nYou ({str(deck.getprintedtotal(player_cards, True)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
@@ -216,7 +213,7 @@ while active:
 			for card in dealer_cards:
 				print(card)
 		elif game_result == "push":
-			print("--------------------")
+			print("-"*28)
 			print("You tied, push.")
 			print(f"\nYou ({str(deck.getprintedtotal(player_cards, True)).replace('[', '').replace(']', '')}):")
 			for card in player_cards:
