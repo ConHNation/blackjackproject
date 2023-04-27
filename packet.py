@@ -1,4 +1,4 @@
-# We were originally gonna make this multiplayer
+# I were originally gonna make this multiplayer
 # but couldn't figure it out. Here's the code for
 # it though.
 
@@ -65,7 +65,7 @@ def accept_clients(server, yeah):
 	startButton.config(state=tk.DISABLED)
 	stopButton.config(state=tk.NORMAL)
 
-
+# Closes all active sockets and rejects incoming requests.
 def stop_server():
 	global server
 	startButton.config(state=tk.NORMAL)
