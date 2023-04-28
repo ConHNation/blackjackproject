@@ -141,7 +141,7 @@ try:
 		print("Your balance: ${:,.2f}".format(userbalance))
 	
 		# Asks the user for their wager amount.
-		wager = input(f"Table pays {payout}x\nSay amount to wager or 'q' to quit (Min bet: $100): ")
+		wager = input(f"Table pays {payout}x\nSay amount to wager or 'q' to quit (Min bet: $50): ")
 		# Ends the game if the user quits.
 		if "q" in wager.lower():
 			logging.debug("User ended game via input.")
@@ -150,7 +150,7 @@ try:
 			if starting_balance < userbalance:
 				print("\nYou won - You finished with ${:,.2f} (+${:,.2f}).\n\nThanks for playing!".format(userbalance, userbalance-starting_balance))
 			elif starting_balance > userbalance:
-				print("\nHouse wins! - You finished with ${:,.2f} (-${:,.2f}).\n\nThanks for playing!".format(userbalance, userbalance-starting_balance))
+				print("\nHouse wins! - You finished with ${:,.2f} (-${:,.2f}).\n\nThanks for playing!".format(userbalance, starting_balance-userbalance))
 			else:
 				print("Goodbye o/")
 			print("-"*28)
@@ -158,16 +158,16 @@ try:
 			break
 		while not wager.isdigit():
 			print("-"*28)
-			wager = input(f"Invalid amount. Please say a numerical value.\n\nTable pays {payout}x\nSay amount to wager or 'q' to quit (Min bet: $100): ")
+			wager = input(f"Invalid amount. Please say a numerical value.\n\nTable pays {payout}x\nSay amount to wager or 'q' to quit (Min bet: $50): ")
 		# Asks the user for a new wager while it is
 		# less than $100.
-		while float(wager) < 100:
-			wager = input("Below minimum bet.\nSay amount to wager or 'q' to quit (Min bet: $100): ")
+		while float(wager) < 50:
+			wager = input("Below minimum bet.\nSay amount to wager or 'q' to quit (Min bet: $50): ")
 		# Asks the user for a new wager while they 
 		# don't have that amount to bet.
 		while not balance.has_wager("main", int(wager)):
 			logging.error(f"User only has ${userbalance}, which is less than ${wager}.")
-			wager = input(f"You don't have enough money. Balance: ${userbalance}\n\nSay amount to wager or 'q' to quit (Min bet: $100): ")
+			wager = input(f"You don't have enough money. Balance: ${userbalance}\n\nSay amount to wager or 'q' to quit (Min bet: $50): ")
 		# Checks once again if the user has quit to
 		# avoid errors. If not, wager is converted
 		# to a float.
@@ -418,12 +418,11 @@ except KeyboardInterrupt:
 	if starting_balance < userbalance:
 		print("\nYou won! - You finished with ${:,.2f} (+${:,.2f}).\n\nThanks for playing!".format(userbalance, userbalance-starting_balance))
 	elif starting_balance > userbalance:
-		print("\nHouse wins! - You finished with ${:,.2f} (-${:,.2f}).\n\nThanks for playing!".format(userbalance, userbalance-starting_balance))
+		print("\nHouse wins! - You finished with ${:,.2f} (-${:,.2f}).\n\nThanks for playing!".format(userbalance, starting_balance-userbalance))
 	else:
 		print("Goodbye o/")
 	print("-"*28)
 	logging.info("Ending game...")
-	_exit(0)
 except:
 	raise RuntimeError("Game process was interrupted. Check /logs for more info.")
 	_exit(0)

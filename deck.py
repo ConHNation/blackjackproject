@@ -124,7 +124,6 @@ def getacetotal(total):
 	if type(total) == int:
 		return total
 	elif type(total) == list:
-		print(total)
 		if (total[0] > 21) and (total[1] <= 21):
 			logging.debug("1st total over 21, using 2nd total.")
 			return total[1]
